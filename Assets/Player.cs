@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using objClasses;
 
-    public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
-        public string ign = "";
-        public List<Ship> units;
-        Base homebase;
+    public string ign = "";
+    public List<Ship> units;
+    Base homebase;
 
-        // Use this for initialization
-        public Player(string id) {
-
-            ign = id;
-            homebase = new Base();
-            units.Add(new Ship());
-       }
-
+    // Use this for initialization
+    public Player(string id, ref List<Ship> army, int baseHp)
+    {
+        ign = id;
+        homebase = new Base(baseHp);
+        units = army;
     }
+
+    public void updateBase(int hp)
+    {
+        homebase.updateHp(hp);
+    }
+
+
+}

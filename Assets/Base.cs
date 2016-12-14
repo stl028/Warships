@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace objClasses
+
+public class Base : MonoBehaviour
 {
 
-    public class Base : MonoBehaviour
+    public int health;
+    // Use this for initialization
+    public Base(int hp)
     {
+        health = hp;
+    }
 
-        int health;
-        // Use this for initialization
-        public Base()
-        {
-            health = 3;
-        }
+    public int getHealth()
+    {
+        return health;
+    }
 
+    public void updateHp(int newHp)
+    {
+        health = newHp;
     }
 }

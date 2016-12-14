@@ -8,18 +8,19 @@ public class Ship : MonoBehaviour {
 	int hp;
 	int posX;
 	int posY;
+    int id;
 	
 	//Vars detailing movement
 	int coneWidth;
 	double arrowSpeed;
 	double power;
 
-	public Ship()
+	public Ship(int num)
     {
-
+        id = num;
     }
 
-	void SetParams(int health, int xCoor, int yCoor, int cWidth, double aSpeed, double str) {
+	public void SetParams(int health, int xCoor, int yCoor, int cWidth, double aSpeed, double str) {
 		hp = health;
 		posX = xCoor;
 		posY = yCoor;
@@ -28,12 +29,43 @@ public class Ship : MonoBehaviour {
 		power = str;
 	}
 
-	void updatePos(int xCoor, int yCoor) {
+	public void updatePos(int xCoor, int yCoor) {
 		posX = xCoor;
 		posY = yCoor;
 	}
 
-	void updateHP(int health) {
+	public void updateHP(int health) {
 		hp = health;
 	}
+
+    public int getHP()
+    {
+        return hp;
+    }
+
+    public int getPosX()
+    {
+        return posX;
+    }
+
+    public int getPosY()
+    {
+        return posY;
+    }
+
+    public double getPower()
+    {
+        return power;
+    }
+
+    public double getArrowSpeed()
+    {
+        return arrowSpeed;
+    }
+
+    public int getConeWidth()
+    {
+        return coneWidth;
+    }
+
 }
