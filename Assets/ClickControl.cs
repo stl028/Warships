@@ -9,11 +9,11 @@ public class ClickControl : MonoBehaviour {
     {
         clickedGameObj = clickedOn;
         print(clickedGameObj.name);
-        Update();
+        Turn();
 
     }
 
-    void Update()
+    void Turn()
     {
         Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
 

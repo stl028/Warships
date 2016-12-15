@@ -4,16 +4,32 @@ using UnityEngine;
 
 public class ShipControls : MonoBehaviour {
 
-    public ClickControl control;
+    bool directionOn = false;
+
+    public ClickControl control0;
+    public ClickControl control1;
 
 	// Use this for initialization
 	void Start () {
-        control = GameObject.Find("ship0").GetComponent<ClickControl>();
+        control0 = GameObject.Find("ship0").GetComponent<ClickControl>();
+        control1 = GameObject.Find("ship1").GetComponent<ClickControl>(); 
 	}
 
-    void OnMouseDown()
-    {
-        control.SelectedShip(this.transform.gameObject);
+    void Update()
+    {   if (Input.GetMouseButtonDown(0))
+        {
+            directionOn = true;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            directionOn = false;
+        }
+
+        if (directionOn == true)
+        {
+            control0.SelectedShip(this.transform.gameObject);
+            control1.SelectedShip(this.transform.gameObject);
+        }
     }
 	
 	
