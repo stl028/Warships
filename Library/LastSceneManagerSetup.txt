@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/GeometricScene.unity
+- path: Assets/Scenes/GeometricScene.unity
   isLoaded: 1
   isActive: 1

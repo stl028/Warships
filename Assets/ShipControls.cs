@@ -3,63 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipControls : MonoBehaviour {
+	
+	public GameObject clickedGameObj;
 
-    bool directionOn = false;
+	public void SelectedShip(string clickedOn)
+	{
+		clickedGameObj = GameObject.Find(clickedOn);
+		//Turn();
 
-	public GameObject clickedObj;
-    public ClickControl control0;
-    public ClickControl control1;
-
-	// Use this for initialization
-	void Start () {
-
-        control0 = GameObject.Find("ship0").GetComponent<ClickControl>();
-        control1 = GameObject.Find("ship1").GetComponent<ClickControl>(); 
 	}
+	/*
+	public void Turn()
+	{
+		//Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
+		Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z);
 
-    void Update()
-    {   
-		/*
-		if (Input.GetMouseButtonDown(0))
-        {
-            directionOn = true;
-			clickedObj = GetClickedGameObject ();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            directionOn = false;
-        }
+		Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 
-        if (directionOn == true)
-        {
-            control0.SelectedShip(this.transform.gameObject);
-            control1.SelectedShip(this.transform.gameObject);
-        }
-		if (ship0.
+		transform.LookAt(mouseWorldPosition, Vector3.right);
+	}*/
 
-*/
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			RaycastHit hitInfo = new RaycastHit();
-			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-			if (hit) 
-			{
-				Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-				var name = hitInfo.gameObject.name;
-
-				if (hitInfo.transform.gameObject.tag == "ship0")
-				{
-					control0.SelectedShip(this.transform.gameObject);
-				} else {
-					control1.SelectedShip(this.transform.gameObject);
-				}
-			} else {
-				Debug.Log("No hit");
-			}
-			Debug.Log("Mouse is down");
-		} 
-    }
-	
-	
+	public void Turn() {
+		
+	}
 }
+Vector3 mousePos = Input.mousePosition;
+mousePos.z = 5.23f;
+
+Vector3 objectPos = Camera.main.WorldToScreenPoint (transform.position);
+mousePos.x = mousePos.x - objectPos.x;
+mousePos.y = mousePos.y - objectPos.y;
+
+float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
