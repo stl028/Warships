@@ -29,7 +29,11 @@ public class ClickControl : MonoBehaviour {
 			RaycastHit hitInfo = new RaycastHit();
 			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 
+			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+
 			if (hit) 
+			//if (hitCollider)
 			{
 				Debug.Log ("Hit");
 				string name = hitInfo.transform.gameObject.name;
