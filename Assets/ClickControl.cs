@@ -66,5 +66,10 @@ public class ClickControl : MonoBehaviour {
 
 	}//update bracket
 
+	//Method to make direction arrow go back and forth
+	public int alterSlope(int slope, int coneWidth) {
 
+		int coneStart = slope - coneWidth;
+		int coneEnd = slope + coneWidth;
+	}
 }

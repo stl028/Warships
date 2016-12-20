@@ -38,7 +38,11 @@ public class ShipControls : MonoBehaviour {
 	//will retun the angle
 	public int ConeAngle(Vector3 shipPos, Vector2 mousePos) {
 
-	}
+		var ratio = (mousePos.y - shipPos.y) / (mousePos.x - shipPos.x);
+		var slope = Mathf.Atan (ratio);
 
+		return slope;
+
+	}
 
 }
