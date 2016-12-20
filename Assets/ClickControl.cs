@@ -10,66 +10,72 @@ public class ClickControl : MonoBehaviour {
 
 	//For figuring out which state we're in
 	int leftClick = 0;
-	int rightClick = 0;
-
 	void Start() {
 
 	}
 
-	void Update() {
+    void Update()
+    {
 
-		//turning the ship
-		if (leftClick == 1 && rightClick == 1) {
+        //turning the ship
+        if (leftClick == 1)
+        {
 
-			control.Turn ();
-		}
+            control.Turn();
+        }
 
-		//For checking if a ship is clicked
-		if (Input.GetMouseButtonDown(0))
-		{
-			//RaycastHit hitInfo = new RaycastHit();
-			//bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 
-			Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-			//Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+        ///////////////////////////////////////For rotating the ship////////////////////////////////////////
 
-			RaycastHit2D hitInfo = Physics2D.Raycast (mousePosition, Vector2.zero);
+        if (Input.GetMouseButtonDown(0) && leftClick == 0)
+        {
+            //RaycastHit hitInfo = new RaycastHit();
+            //bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 
-			/*if (hitInfo == null) {
-				Debug.Log ("NULL hit");
-			}*/
+            Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hitInfo = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-			if (hitInfo.collider != null) 
-			//if (hitCollider)
-			{
-				Debug.Log ("Hit");
-				//string name = hitInfo.transform.gameObject.name;
-				string name = hitInfo.collider.gameObject.name;
-				Debug.Log ("Name is: " + name);
-				//Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-				control = GameObject.Find(name).GetComponent<ShipControls>();
-				control.SelectedShip(this.transform.gameObject.name);
+            if (hitInfo.collider != null)
+            {
+                Debug.Log("hit");
 
-				leftClick++;
-				rightClick++;
+                string name = hitInfo.collider.gameObject.name;
+                control = GameObject.Find(name).GetComponent<ShipControls>();
+                control.SelectedShip(this.transform.gameObject.name);
 
-			} else {
-				Debug.Log("No hit");
-			}
-		} //if bracket
+                leftClick++;
 
-		if (Input.GetMouseButtonDown (1) && rightClick != 0) {
+            }
+            else
+            {
+                Debug.Log("No hit");
+            }
+        } //if bracket
 
-			leftClick--;
-			rightClick--;
-		}
+        ///////////////////////////////////For Selecting the direction/////////////////////////////////////
 
-	}//update bracket
+        if (Input.GetMouseButtonDown(0) && leftClick == 1)
+        {
+            Vector3 shipPos = control.GetShipPosition();
+            Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            float theta = ConeDirection(shipPos, mousePos);
 
-	//Method to make direction arrow go back and forth
-	public int alterSlope(int slope, int coneWidth) {
 
-		int coneStart = slope - coneWidth;
-		int coneEnd = slope + coneWidth;
-	}
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+
+            leftClick--;
+        }
+
+    }//update bracket
+
+    //Method to get the direction of the cone
+    public float ConeDirection(Vector2 mousePos, Vector3 shipPos)
+    {
+        float slope = (mousePos.y - shipPos.y) / (mousePos.x - shipPos.x);
+
+        return Mathf.Atan(slope);
+    }
 }
