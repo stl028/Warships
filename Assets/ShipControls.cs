@@ -34,4 +34,11 @@ public class ShipControls : MonoBehaviour {
 		float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 	}
+
+	//will retun the angle
+	public int ConeAngle(Vector3 shipPos, Vector2 mousePos) {
+
+	}
+
+
 }

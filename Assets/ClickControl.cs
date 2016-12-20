@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClickControl : MonoBehaviour {
     
 	ShipControls control;
+	public Camera cam;
 
 
 	//For figuring out which state we're in
@@ -26,17 +27,25 @@ public class ClickControl : MonoBehaviour {
 		//For checking if a ship is clicked
 		if (Input.GetMouseButtonDown(0))
 		{
-			RaycastHit hitInfo = new RaycastHit();
-			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+			//RaycastHit hitInfo = new RaycastHit();
+			//bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 
-			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+			Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+			//Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
 
-			if (hit) 
+			RaycastHit2D hitInfo = Physics2D.Raycast (mousePosition, Vector2.zero);
+
+			/*if (hitInfo == null) {
+				Debug.Log ("NULL hit");
+			}*/
+
+			if (hitInfo.collider != null) 
 			//if (hitCollider)
 			{
 				Debug.Log ("Hit");
-				string name = hitInfo.transform.gameObject.name;
+				//string name = hitInfo.transform.gameObject.name;
+				string name = hitInfo.collider.gameObject.name;
+				Debug.Log ("Name is: " + name);
 				//Debug.Log("Hit " + hitInfo.transform.gameObject.name);
 				control = GameObject.Find(name).GetComponent<ShipControls>();
 				control.SelectedShip(this.transform.gameObject.name);
