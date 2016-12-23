@@ -9,19 +9,8 @@ public class ShipControls : MonoBehaviour {
 	public void SelectedShip(string clickedOn)
 	{
 		clickedGameObj = GameObject.Find(clickedOn);
-		//Turn();
-
 	}
-	/*
-	public void Turn()
-	{
-		//Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
-		Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z);
-
-		Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-
-		transform.LookAt(mouseWorldPosition, Vector3.right);
-	}*/
+	
 
 	public void Turn() {
 		Vector3 mousePos = Input.mousePosition;
@@ -35,10 +24,10 @@ public class ShipControls : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 	}
 
-	//will retun the angle
-	public int ConeAngle(Vector3 shipPos, Vector2 mousePos) {
-
-	}
+    public Vector3 GetShipPosition()
+    {
+        return clickedGameObj.transform.position;
+    }
 
 
 }
