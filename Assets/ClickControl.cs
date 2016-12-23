@@ -35,12 +35,7 @@ public class ClickControl : MonoBehaviour {
 
 			RaycastHit2D hitInfo = Physics2D.Raycast (mousePosition, Vector2.zero);
 
-			/*if (hitInfo == null) {
-				Debug.Log ("NULL hit");
-			}*/
-
 			if (hitInfo.collider != null) 
-			//if (hitCollider)
 			{
 				Debug.Log ("Hit");
 				//string name = hitInfo.transform.gameObject.name;
