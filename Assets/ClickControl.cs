@@ -14,8 +14,21 @@ public class ClickControl : MonoBehaviour {
 
     float tempDirection = 0;
 
-    //For figuring out which state we're in
+    //maximum width of the power bar
+    float fullWidth = 256;
+
+    //stores the current set power
+    float finalPower;
+
+    //to start and stop addition to power
+    bool powerInc = false;
+
+    //speed  to increment the power bar
+    float barSpeed = 25;
+
+    //For figuring out which click state we're in
     int leftClick = 0;
+
 	void Start() {
 
 	}
@@ -78,17 +91,37 @@ public class ClickControl : MonoBehaviour {
 
         }
 
+        ////////////////////////////////////For selection power///////////////////////////
         else if (Input.GetMouseButtonDown(0) && leftClick == 2)
         {
-            ++leftClick;
-            Debug.Log("Final Float:" + tempDirection.ToString());
-            dirThread.Abort();
+            powerInc = true;
         }
+
+        //On the last click, we get the final power and move the ship
+        else if (Input.GetMouseButtonDown(0) && leftClick == 3)
+        {
+            powerInc = false;
+        }
+
+        if (powerInc)
+        {
+            finalPower += Time.deltaTime * barSpeed;
+
+            //stops the power bar from going past its max length
+            finalPower = Mathf.Clamp(finalPower, 0, fullWidth);
+
+            //set the width of the GUI Texture equal to that power value
+            //guiTexture.pixelInset.width = thePower;
+        }
+
+
+        ////////////////////////////////////For right clicking/////////////////////////////
 
         if (Input.GetMouseButtonDown(1) && leftClick != 0)
         {
 
             leftClick--;
+            powerInc = false;
         }
 
     }//update bracket
