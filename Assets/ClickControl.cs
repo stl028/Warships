@@ -20,8 +20,10 @@ public class ClickControl : MonoBehaviour {
     //stores the current set power
     float finalPower;
 
-    //to start and stop addition to power
+    //to start and stop addition/subtraction to power
     bool powerInc = false;
+
+    bool powerDec = false;
 
     //speed  to increment the power bar
     float barSpeed = 25;
@@ -29,7 +31,32 @@ public class ClickControl : MonoBehaviour {
     //For figuring out which click state we're in
     int leftClick = 0;
 
-	void Start() {
+
+    float barDisplay = 0;
+    Vector2 pos = new Vector2(20,40);
+    Vector2 size = new Vector2(60,20);
+    Texture2D progressBarEmpty;
+    Texture2D progressBarFull;
+
+    void OnGUI()
+    {
+
+        // draw the background:
+        GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
+        Rect rectEmpty = new Rect(0, 0, size.x, size.y);
+        GUI.Box(rectEmpty, progressBarEmpty);
+
+        // draw the filled-in part:
+        GUI.BeginGroup(new Rect(0, 0, size.x * finalPower, size.y));
+        Rect rectFull = new Rect(0, 0, size.x, size.y);
+        GUI.Box(rectFull, progressBarFull);
+        GUI.EndGroup();
+
+        GUI.EndGroup();
+
+    }
+
+    void Start() {
 
 	}
 
@@ -94,13 +121,18 @@ public class ClickControl : MonoBehaviour {
         ////////////////////////////////////For selection power///////////////////////////
         else if (Input.GetMouseButtonDown(0) && leftClick == 2)
         {
+            dirThread.Abort();
+            leftClick++;
             powerInc = true;
         }
 
         //On the last click, we get the final power and move the ship
         else if (Input.GetMouseButtonDown(0) && leftClick == 3)
         {
+            leftClick = 0;
+            Debug.Log("Power:" + finalPower.ToString());
             powerInc = false;
+            powerDec = false;
         }
 
         if (powerInc)
@@ -110,8 +142,31 @@ public class ClickControl : MonoBehaviour {
             //stops the power bar from going past its max length
             finalPower = Mathf.Clamp(finalPower, 0, fullWidth);
 
+            //start decreasing power when the power reaches the maximum
+            if (finalPower == fullWidth)
+            {
+                powerInc = false;
+                powerDec = true;
+            }
+
             //set the width of the GUI Texture equal to that power value
-            //guiTexture.pixelInset.width = thePower;
+            GUITexture bar = GameObject.Find("powerBar").GetComponent<GUITexture>();
+           
+        }
+
+        if (powerDec)
+        {
+            finalPower -= Time.deltaTime * barSpeed;
+
+            //stops the power bar from goin past 0
+            finalPower = Mathf.Clamp(finalPower, 0, fullWidth);
+
+            //starts increasing power when the power reaches 0
+            if (finalPower == 0)
+            {
+                powerInc = true;
+                powerDec = false;
+            }
         }
 
 
@@ -122,6 +177,7 @@ public class ClickControl : MonoBehaviour {
 
             leftClick--;
             powerInc = false;
+            powerDec = false;
         }
 
     }//update bracket
