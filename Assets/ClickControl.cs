@@ -12,10 +12,11 @@ public class ClickControl : MonoBehaviour {
     //For now the cone width of all ships is 30
     float coneWidth = Mathf.PI / 6;
 
+    //the angle the user clicked
     float tempDirection = 0;
 
     //maximum width of the power bar
-    float fullWidth = 256;
+    float fullWidth = 20;
 
     //stores the current set power
     float finalPower;
@@ -106,7 +107,7 @@ public class ClickControl : MonoBehaviour {
 
             Vector3 shipPos = control.GetShipPosition();
             Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-            float theta = ConeDirection(shipPos, mousePos);
+            float theta = ConeDirection(mousePos, shipPos);
             float coneStart = theta - coneWidth / 2;
             float coneEnd = theta + coneWidth / 2;
 
@@ -133,6 +134,7 @@ public class ClickControl : MonoBehaviour {
             Debug.Log("Power:" + finalPower.ToString());
             powerInc = false;
             powerDec = false;
+            moveShip();
         }
 
         if (powerInc)
@@ -219,20 +221,15 @@ public class ClickControl : MonoBehaviour {
                 tempDirection += spacing;
                 direction = false;
             }
-            /*
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("breakLeftClick");
-                leftClick++;
-                //break;
-            }
-            else if (Input.GetMouseButtonDown(1) && leftClick == 2)
-            {
-                Debug.Log("breakRightClick");
-                break;
-            }
-            */
             Debug.Log("bot of inf loop");
         }
+    }
+
+    public void moveShip()
+    {
+        Vector3 shipPos = control.GetShipPosition();
+        shipPos.x += (finalPower * Mathf.Cos(tempDirection));
+        shipPos.y += (finalPower * Mathf.Sin(tempDirection));
+        control.SetShipPosition(shipPos);
     }
 }

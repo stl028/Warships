@@ -29,5 +29,10 @@ public class ShipControls : MonoBehaviour {
         return clickedGameObj.transform.position;
     }
 
+    public void SetShipPosition(Vector3 shipPos)
+    {
+        clickedGameObj.transform.position = shipPos;
+    }
+
 
 }
