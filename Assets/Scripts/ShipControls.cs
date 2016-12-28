@@ -6,9 +6,9 @@ public class ShipControls : MonoBehaviour {
 	
 	public GameObject clickedGameObj;
 
-	public void SelectedShip(string clickedOn)
+	public void SelectedShip(GameObject clickedOn)
 	{
-		clickedGameObj = GameObject.Find(clickedOn);
+        clickedGameObj = clickedOn;
 	}
 	
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LanuchPower : MonoBehaviour {
+public class LaunchPower : MonoBehaviour {
 
 	public Slider bar;
 

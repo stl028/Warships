@@ -16,7 +16,7 @@ public class ClickControl : MonoBehaviour {
     float tempDirection = 0;
 
     //maximum width of the power bar
-    float fullWidth = 20;
+    float fullWidth = 256;
 
     //stores the current set power
     float finalPower;
@@ -87,7 +87,7 @@ public class ClickControl : MonoBehaviour {
 
                 string name = hitInfo.collider.gameObject.name;
                 control = GameObject.Find(name).GetComponent<ShipControls>();
-                control.SelectedShip(this.transform.gameObject.name);
+                control.SelectedShip(hitInfo.collider.gameObject);
 
                 leftClick++;
 
@@ -132,9 +132,13 @@ public class ClickControl : MonoBehaviour {
         {
             leftClick = 0;
             Debug.Log("Power:" + finalPower.ToString());
+            Debug.Log("Angle:" + tempDirection.ToString());
             powerInc = false;
             powerDec = false;
+
+
             moveShip();
+            finalPower = 0;
         }
 
         if (powerInc)
@@ -152,7 +156,7 @@ public class ClickControl : MonoBehaviour {
             }
 
             //set the width of the GUI Texture equal to that power value
-            GUITexture bar = GameObject.Find("powerBar").GetComponent<GUITexture>();
+            //GUITexture bar = GameObject.Find("powerBar").GetComponent<GUITexture>();
            
         }
 
@@ -180,6 +184,7 @@ public class ClickControl : MonoBehaviour {
             leftClick--;
             powerInc = false;
             powerDec = false;
+            finalPower = 0;
         }
 
     }//update bracket
@@ -187,9 +192,16 @@ public class ClickControl : MonoBehaviour {
     //Method to get the direction of the cone
     public float ConeDirection(Vector2 mousePos, Vector3 shipPos)
     {
+        //use the slope formula from grade schoool
         float slope = (mousePos.y - shipPos.y) / (mousePos.x - shipPos.x);
 
-        return Mathf.Atan(slope);
+        
+        float angle = Mathf.Atan(slope);
+
+        //check to see if we are going left, if so we need to offset by pi
+        if (mousePos.x < shipPos.x) angle += Mathf.PI;
+
+        return angle;
     }
 
     public void startDirectionCounter(float spacing, float coneStart, float coneEnd)
@@ -228,8 +240,14 @@ public class ClickControl : MonoBehaviour {
     public void moveShip()
     {
         Vector3 shipPos = control.GetShipPosition();
+        finalPower /= 20;
+        float temp = finalPower * Mathf.Cos(tempDirection);
+        Debug.Log("X offset: " + temp);
         shipPos.x += (finalPower * Mathf.Cos(tempDirection));
         shipPos.y += (finalPower * Mathf.Sin(tempDirection));
+        Debug.Log("X coors: " + shipPos.x);
+        Debug.Log("Y coor: " + shipPos.y);
+        //Debug.Log("Control ship: " + control.clickedGameObj.transform.name);
         control.SetShipPosition(shipPos);
     }
 }
