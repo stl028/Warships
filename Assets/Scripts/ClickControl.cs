@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class ClickControl : MonoBehaviour {
     
 	ShipControls control;
-	LaunchPower powerBar;
-}
+    LaunchPower powerBar;
+
 	public Camera cam;
     Thread dirThread;
 
@@ -35,36 +35,13 @@ public class ClickControl : MonoBehaviour {
     //For figuring out which click state we're in
     int leftClick = 0;
 
-
-    float barDisplay = 0;
-    Vector2 pos = new Vector2(20,40);
-    Vector2 size = new Vector2(60,20);
-    Texture2D progressBarEmpty;
-    Texture2D progressBarFull;
-
-    void OnGUI()
-    {
-
-        // draw the background:
-        GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
-        Rect rectEmpty = new Rect(0, 0, size.x, size.y);
-        GUI.Box(rectEmpty, progressBarEmpty);
-
-        // draw the filled-in part:
-        GUI.BeginGroup(new Rect(0, 0, size.x * finalPower, size.y));
-        Rect rectFull = new Rect(0, 0, size.x, size.y);
-        GUI.Box(rectFull, progressBarFull);
-        GUI.EndGroup();
-
-        GUI.EndGroup();
-
-    }
-
     void Start() {
 
-		Slider sliderBar = GameObject.Find ("PowerBar").GetComponent<Slider> ();
-		powerBar = new LaunchPower (sliderBar);
-	}
+        Image fill = GameObject.Find("Image_PowerBarForeground").GetComponent<Image>();
+        powerBar = new LaunchPower(ref fill);
+        powerBar.UpdatePower(finalPower, fullWidth);
+
+    }
 
     void Update()
     {
@@ -130,7 +107,7 @@ public class ClickControl : MonoBehaviour {
             dirThread.Abort();
             leftClick++;
             powerInc = true;
-			powerBar.ChangeValue(finalPower);
+			powerBar.UpdatePower(finalPower, fullWidth);
         }
 
         //On the last click, we get the final power and move the ship
