@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickControl : MonoBehaviour {
     
 	ShipControls control;
+	LaunchPower powerBar;
+}
 	public Camera cam;
     Thread dirThread;
 
@@ -59,6 +62,8 @@ public class ClickControl : MonoBehaviour {
 
     void Start() {
 
+		Slider sliderBar = GameObject.Find ("PowerBar").GetComponent<Slider> ();
+		powerBar = new LaunchPower (sliderBar);
 	}
 
     void Update()
@@ -125,6 +130,7 @@ public class ClickControl : MonoBehaviour {
             dirThread.Abort();
             leftClick++;
             powerInc = true;
+			powerBar.ChangeValue(finalPower);
         }
 
         //On the last click, we get the final power and move the ship
@@ -204,6 +210,8 @@ public class ClickControl : MonoBehaviour {
         return angle;
     }
 
+
+	//Method to move the direction arrow back and forth
     public void startDirectionCounter(float spacing, float coneStart, float coneEnd)
     {
 
