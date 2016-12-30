@@ -57,9 +57,7 @@ public class ClickControl : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && leftClick == 0)
         {
-            //RaycastHit hitInfo = new RaycastHit();
-            //bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-
+           
             Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast(mousePosition, Vector2.zero);
 
