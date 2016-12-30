@@ -53,7 +53,7 @@ public class ClickControl : MonoBehaviour {
             control.Turn();
         }
 			
-        ///////////////////////////////////////For rotating the ship////////////////////////////////////////
+        /////////////////////////////////////For rotating the ship////////////////////////////////////////
 
         if (Input.GetMouseButtonDown(0) && leftClick == 0)
         {
