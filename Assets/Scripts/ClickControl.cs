@@ -8,6 +8,7 @@ public class ClickControl : MonoBehaviour {
     
 	ShipControls control;
     LaunchPower powerBar;
+	ShipPhysics phys;
 
 	public Camera cam;
     Thread dirThread;
@@ -37,6 +38,7 @@ public class ClickControl : MonoBehaviour {
 
     void Start() {
 
+		//phys = new ShipPhysics ();
         Image fill = GameObject.Find("Image_PowerBarForeground").GetComponent<Image>();
         powerBar = new LaunchPower(ref fill);
         powerBar.UpdatePower(finalPower, fullWidth);
@@ -50,9 +52,7 @@ public class ClickControl : MonoBehaviour {
         {
             control.Turn();
         }
-
-
-
+			
         ///////////////////////////////////////For rotating the ship////////////////////////////////////////
 
         if (Input.GetMouseButtonDown(0) && leftClick == 0)
@@ -70,6 +70,8 @@ public class ClickControl : MonoBehaviour {
                 string name = hitInfo.collider.gameObject.name;
                 control = GameObject.Find(name).GetComponent<ShipControls>();
                 control.SelectedShip(hitInfo.collider.gameObject);
+				phys = GameObject.Find (name).GetComponent<ShipPhysics> ();
+				phys.SetCurrent(hitInfo.collider.gameObject.name);
 
                 leftClick++;
 
