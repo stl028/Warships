@@ -69,7 +69,7 @@ public class ClickControl : MonoBehaviour {
                 control = GameObject.Find(name).GetComponent<ShipControls>();
                 control.SelectedShip(hitInfo.collider.gameObject);
 				phys = GameObject.Find (name).GetComponent<ShipPhysics> ();
-				phys.SetCurrent(hitInfo.collider.gameObject.name);
+				phys.SetCurrent(hitInfo.collider.gameObject);
 
                 leftClick++;
 

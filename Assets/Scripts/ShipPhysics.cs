@@ -22,8 +22,8 @@ public class ShipPhysics : MonoBehaviour
 	}
 
 	//sets the currently moving ship
-	public void SetCurrent(string name) {
-		currentlyMoving = name;
+	public void SetCurrent(GameObject obj) {
+		currentlyMoving = obj.name;
 	}
 		
 }
