@@ -5,13 +5,14 @@ using UnityEngine;
 //[RequireComponent(typeof(BoxCollider2D))]
 public class ShipPhysics : MonoBehaviour
 {
-
+	//The currently selected ship
 	string currentlyMoving = "";
 
 	void OnTriggerEnter2D(Collider2D col) {
         Debug.Log("Collided!");
 		Debug.Log("MovingShip:" + currentlyMoving);
 
+		//Destroy the ship that collides with the moving ship
 		if (col.gameObject.tag == "Ship" && !currentlyMoving.Equals(""))
         {
             Debug.Log("Name of ship: " + col.gameObject.name);
@@ -20,36 +21,9 @@ public class ShipPhysics : MonoBehaviour
         }
 	}
 
+	//sets the currently moving ship
 	public void SetCurrent(string name) {
 		currentlyMoving = name;
 	}
-
-    /*void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log("Collided!");
-        if (col.gameObject.tag == "Ship")
-        {
-            Destroy(col.gameObject);
-        }
-    }*/
-
-    /*void OnTriggerEnter(Collider col)
-    {
-        Debug.Log("Collided!");
-        if (col.gameObject.tag == "Ship")
-        {
-            Destroy(col.gameObject);
-        }
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        Debug.Log("Collided!");
-        if (col.gameObject.tag == "Ship")
-        {
-            Destroy(col.gameObject);
-        }
-    }
-    */
-
+		
 }
