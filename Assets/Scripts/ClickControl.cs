@@ -9,6 +9,11 @@ public class ClickControl : MonoBehaviour {
 	ShipControls control;
     LaunchPower powerBar;
 	ShipPhysics phys;
+    Rigidbody2D rigidbody;
+    Vector3 targetPos;
+    Vector3 initPos;
+    float sqMag;
+    bool click = false;
 
 	public Camera cam;
     Thread dirThread;
@@ -42,6 +47,8 @@ public class ClickControl : MonoBehaviour {
         Image fill = GameObject.Find("Image_PowerBarForeground").GetComponent<Image>();
         powerBar = new LaunchPower(ref fill);
         powerBar.UpdatePower(finalPower, fullWidth);
+        sqMag = Mathf.Infinity;
+        control = new ShipControls();
 
     }
 
@@ -69,6 +76,8 @@ public class ClickControl : MonoBehaviour {
                 control = GameObject.Find(name).GetComponent<ShipControls>();
                 control.SelectedShip(hitInfo.collider.gameObject);
 				phys = GameObject.Find (name).GetComponent<ShipPhysics> ();
+                rigidbody = GameObject.Find(name).GetComponent<Rigidbody2D>();
+                phys.SetRigid(rigidbody);
 				phys.SetCurrent(hitInfo.collider.gameObject);
 
                 leftClick++;
@@ -117,9 +126,11 @@ public class ClickControl : MonoBehaviour {
             Debug.Log("Angle:" + tempDirection.ToString());
             powerInc = false;
             powerDec = false;
-
+            click = true;
 
             moveShip(50);
+            
+            
             finalPower = 0;
         }
 
@@ -171,6 +182,8 @@ public class ClickControl : MonoBehaviour {
             powerDec = false;
             finalPower = 0;
         }
+
+        this.stopShip();
 
     }//update bracket
 
@@ -224,9 +237,10 @@ public class ClickControl : MonoBehaviour {
         }
     }
 
-    public void moveShip(float time)
+    public void moveShip(float speed)
     {
         Vector3 shipPos = control.GetShipPosition();
+        initPos = control.GetShipPosition();
         finalPower /= 20;
         float temp = finalPower * Mathf.Cos(tempDirection);
         Debug.Log("X offset: " + temp);
@@ -234,7 +248,25 @@ public class ClickControl : MonoBehaviour {
         shipPos.y += (finalPower * Mathf.Sin(tempDirection));
         Debug.Log("X coors: " + shipPos.x);
         Debug.Log("Y coor: " + shipPos.y);
+        targetPos = shipPos;
+        Vector3 direction = (targetPos - control.GetShipPosition()).normalized;
+        rigidbody.velocity = direction * speed;
+        sqMag = (targetPos - control.GetShipPosition()).sqrMagnitude;
         //Debug.Log("Control ship: " + control.clickedGameObj.transform.name);
-        control.SetShipPosition(shipPos, 50);
+        //control.SetShipPosition(shipPos);
     }
+
+    public void stopShip()
+    {
+        if (control.clickedGameObj != null)
+        {
+            float curMag = (targetPos - control.GetShipPosition()).sqrMagnitude;
+            if (curMag > sqMag)
+            {
+                rigidbody.velocity = Vector3.zero;
+            }
+            sqMag = curMag;
+        }
+    }
+
 }

@@ -29,9 +29,9 @@ public class ShipControls : MonoBehaviour {
         return clickedGameObj.transform.position;
     }
 
-    public void SetShipPosition(Vector3 shipPos, float speed)
+    public void SetShipPosition(Vector3 shipPos)
     {
-        clickedGameObj.transform.position = Vector3.Lerp(clickedGameObj.transform.position, shipPos, speed) ;
+        clickedGameObj.transform.position = shipPos;
     }
 
 
