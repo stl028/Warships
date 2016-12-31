@@ -20,7 +20,7 @@ public class ClickControl : MonoBehaviour {
     float tempDirection = 0;
 
     //maximum width of the power bar
-    float fullWidth = 256;
+    float fullWidth = 100;
 
     //stores the current set power
     float finalPower;
@@ -31,7 +31,7 @@ public class ClickControl : MonoBehaviour {
     bool powerDec = false;
 
     //speed  to increment the power bar
-    float barSpeed = 25;
+    float barSpeed = 120;
 
     //For figuring out which click state we're in
     int leftClick = 0;
@@ -107,7 +107,6 @@ public class ClickControl : MonoBehaviour {
             dirThread.Abort();
             leftClick++;
             powerInc = true;
-			powerBar.UpdatePower(finalPower, fullWidth);
         }
 
         //On the last click, we get the final power and move the ship
@@ -137,6 +136,7 @@ public class ClickControl : MonoBehaviour {
                 powerInc = false;
                 powerDec = true;
             }
+			powerBar.UpdatePower(finalPower, fullWidth);
 
             //set the width of the GUI Texture equal to that power value
             //GUITexture bar = GameObject.Find("powerBar").GetComponent<GUITexture>();
@@ -156,6 +156,8 @@ public class ClickControl : MonoBehaviour {
                 powerInc = true;
                 powerDec = false;
             }
+			powerBar.UpdatePower(finalPower, fullWidth);
+
         }
 
 
