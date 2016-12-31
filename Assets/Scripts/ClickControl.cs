@@ -119,7 +119,7 @@ public class ClickControl : MonoBehaviour {
             powerDec = false;
 
 
-            moveShip();
+            moveShip(50);
             finalPower = 0;
         }
 
@@ -224,7 +224,7 @@ public class ClickControl : MonoBehaviour {
         }
     }
 
-    public void moveShip()
+    public void moveShip(float time)
     {
         Vector3 shipPos = control.GetShipPosition();
         finalPower /= 20;
@@ -235,6 +235,6 @@ public class ClickControl : MonoBehaviour {
         Debug.Log("X coors: " + shipPos.x);
         Debug.Log("Y coor: " + shipPos.y);
         //Debug.Log("Control ship: " + control.clickedGameObj.transform.name);
-        control.SetShipPosition(shipPos);
+        control.SetShipPosition(shipPos, 50);
     }
 }
