@@ -10,6 +10,7 @@ public class ClickControl : MonoBehaviour {
     LaunchPower powerBar;
 	ShipPhysics phys;
     Rigidbody2D rigidbody;
+    LaunchArc arcArrow;
     Vector3 targetPos;
     Vector3 initPos;
     float sqMag;
@@ -43,10 +44,15 @@ public class ClickControl : MonoBehaviour {
 
     void Start() {
 
-		//phys = new ShipPhysics ();
+		//Initializing the power bar
         Image fill = GameObject.Find("Image_PowerBarForeground").GetComponent<Image>();
         powerBar = new LaunchPower(ref fill);
         powerBar.UpdatePower(finalPower, fullWidth);
+
+        //Initializing the launc arc
+        Image arc = GameObject.Find("Image_LaunchArc").GetComponent<Image>();
+        arcArrow = new LaunchArc(ref arc);
+
         sqMag = Mathf.Infinity;
         control = new ShipControls();
 
@@ -96,8 +102,14 @@ public class ClickControl : MonoBehaviour {
             Debug.Log("LeftClick1");
             leftClick++;
 
+            //Gets the position of ship and mouse
             Vector3 shipPos = control.GetShipPosition();
             Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+
+            //Move launch arc to clicked ship
+            arcArrow.ChangeArcPos(shipPos);
+
+            //math for launch arc
             float theta = ConeDirection(mousePos, shipPos);
             float coneStart = theta - coneWidth / 2;
             float coneEnd = theta + coneWidth / 2;
@@ -105,6 +117,7 @@ public class ClickControl : MonoBehaviour {
             tempDirection = theta;
             float spacing = Mathf.PI / 180;
 
+            //begin moving launch arrow
             dirThread = new Thread(() => startDirectionCounter(spacing, coneStart, coneEnd));
             dirThread.Start();
 
