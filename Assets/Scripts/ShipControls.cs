@@ -10,7 +10,6 @@ public class ShipControls : MonoBehaviour {
 	{
         clickedGameObj = clickedOn;
 	}
-	
 
 	public void Turn() {
 		Vector3 mousePos = Input.mousePosition;

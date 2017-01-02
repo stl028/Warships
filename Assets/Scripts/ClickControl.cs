@@ -11,12 +11,15 @@ public class ClickControl : MonoBehaviour {
 	ShipPhysics phys;
     Rigidbody2D rigidbody;
     LaunchArc arcArrow;
+
     Vector3 targetPos;
     Vector3 initPos;
     float sqMag;
     bool click = false;
 
 	public Camera cam;
+
+	//Thread to rotate the ship
     Thread dirThread;
 
     //For now the cone width of all ships is 30
@@ -33,7 +36,6 @@ public class ClickControl : MonoBehaviour {
 
     //to start and stop addition/subtraction to power
     bool powerInc = false;
-
     bool powerDec = false;
 
     //speed  to increment the power bar
@@ -52,10 +54,15 @@ public class ClickControl : MonoBehaviour {
         //Initializing the launc arc
         Image arc = GameObject.Find("Image_LaunchArc").GetComponent<Image>();
         arcArrow = new LaunchArc(ref arc);
+		arcArrow.SetCamera (ref cam);
 
+		//Initializing the launch arrow
+		Image arrow = GameObject.Find ("Image_LaunchArrow").GetComponent<Image>();
+		arcArrow.LaunchArrow (ref arrow);
+
+		//Initializing ShipControl
         sqMag = Mathf.Infinity;
         control = new ShipControls();
-
     }
 
     void Update()
@@ -64,7 +71,12 @@ public class ClickControl : MonoBehaviour {
         if (leftClick == 1)
         {
             control.Turn();
+			//arcArrow.Turn ();
         }
+		if (leftClick == 2) {
+			//arcArrow.Turn ();
+			arcArrow.Orbit (control.transform.position);
+		}
 			
         /////////////////////////////////////For rotating the ship////////////////////////////////////////
 
@@ -78,6 +90,7 @@ public class ClickControl : MonoBehaviour {
             {
                 Debug.Log("hit");
 
+				//set the gameobject to the ship if it's a hit
                 string name = hitInfo.collider.gameObject.name;
                 control = GameObject.Find(name).GetComponent<ShipControls>();
                 control.SelectedShip(hitInfo.collider.gameObject);
@@ -107,7 +120,8 @@ public class ClickControl : MonoBehaviour {
             Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
             //Move launch arc to clicked ship
-            arcArrow.ChangeArcPos(shipPos);
+            //arcArrow.ChangeArcPos(shipPos);
+			//CalculateOffset (shipPos, mousePos);
 
             //math for launch arc
             float theta = ConeDirection(mousePos, shipPos);

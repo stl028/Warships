@@ -2,9 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ClickControl.cs">
     <Files>
-      <File FileName="Assets/Scripts/ShipControls.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ClickControl.cs" Line="13" Column="22" />
-      <File FileName="Assets/Scripts/LaunchPower.cs" Line="35" Column="19" />
+      <File FileName="Assets/Scripts/ClickControl.cs" Line="73" Column="28" />
+      <File FileName="Assets/Scripts/LaunchArc.cs" Line="16" Column="27" />
+      <File FileName="Assets/Scripts/ShipControls.cs" Line="15" Column="19" />
+      <File FileName="Assets/Scripts/LaunchPower.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/ShipPhysics.cs" Line="10" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
