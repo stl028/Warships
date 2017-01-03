@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Base.cs" />
     <Compile Include="Assets\Scripts\ClickControl.cs" />
     <Compile Include="Assets\Scripts\GameBoard.cs" />
+    <Compile Include="Assets\Scripts\LaunchArc.cs" />
     <Compile Include="Assets\Scripts\LaunchPower.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Ship.cs" />

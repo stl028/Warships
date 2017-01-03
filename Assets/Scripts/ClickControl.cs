@@ -27,6 +27,7 @@ public class ClickControl : MonoBehaviour {
 
     //the angle the user clicked
     float tempDirection = 0;
+    Vector3 finalCoor;
 
     //maximum width of the power bar
     float fullWidth = 100;
@@ -74,9 +75,8 @@ public class ClickControl : MonoBehaviour {
 			//arcArrow.Turn ();
         }
 		if (leftClick == 2) {
-			//arcArrow.Turn ();
-			arcArrow.Orbit (control.transform.position);
-		}
+            arcArrow.launchArrow.transform.position = finalCoor; 
+        }
 			
         /////////////////////////////////////For rotating the ship////////////////////////////////////////
 
@@ -132,9 +132,9 @@ public class ClickControl : MonoBehaviour {
             float spacing = Mathf.PI / 180;
 
             //begin moving launch arrow
-            dirThread = new Thread(() => startDirectionCounter(spacing, coneStart, coneEnd));
+            dirThread = new Thread(() => startDirectionCounter(spacing, coneStart, coneEnd, shipPos));
             dirThread.Start();
-
+            
         }
 
         ////////////////////////////////////For selection power///////////////////////////
@@ -231,7 +231,7 @@ public class ClickControl : MonoBehaviour {
 
 
 	//Method to move the direction arrow back and forth
-    public void startDirectionCounter(float spacing, float coneStart, float coneEnd)
+    public void startDirectionCounter(float spacing, float coneStart, float coneEnd, Vector3 shipPos)
     {
 
         bool direction = false;
@@ -261,6 +261,10 @@ public class ClickControl : MonoBehaviour {
                 direction = false;
             }
             Debug.Log("bot of inf loop");
+
+            //For GUI
+           finalCoor = arcArrow.Orbit(shipPos, tempDirection);
+            
         }
     }
 

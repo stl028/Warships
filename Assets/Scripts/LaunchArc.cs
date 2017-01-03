@@ -35,11 +35,13 @@ public class LaunchArc : MonoBehaviour {
 	}
 
 	//method for orbitting the arrow
-	public void Orbit(Vector3 shipPos) {
-		
-		transform.RotateAround (center.position, axis, rotationSpeed * Time.deltaTime);
-		//desiredPosition = (transform.position - center.position).normalized * radius + center.position;
-		launchArrow.transform.position = Vector3.MoveTowards(transform.position, shipPos, Time.deltaTime * radiusSpeed);
+	public Vector3 Orbit(Vector3 shipPos, float theta) {
+
+        float xCoor = shipPos.x + OFFSETSCALE * Mathf.Cos(theta);
+        float yCoor = shipPos.y + OFFSETSCALE * Mathf.Sin(theta);
+        Vector3 finalCoor = new Vector3(xCoor, yCoor, 0);
+        return finalCoor;
+
 	}
 
 	public void SetCamera(ref Camera in_cam) {
